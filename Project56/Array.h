@@ -14,43 +14,14 @@ public:
 	~Array();
 	void Print() const;
 	void Random();
-	T** Add(T add);
-	T** Substract(T min);
-	T** Multiply(T mul);
-	T** Divide(T divide);
 	T Max()const;
 	T Min()const;
-	Array& operator=(const Array& obj2) {
-		if (this == &obj2) {
-			return *this;
-		}
-		if (arr != nullptr) {
-			for (int i = 0; i < str; i++)
-			{
-				delete[]arr[i];
-			}
-			delete[]arr;
-		}
+	Array<T>& operator=(const Array<T>& obj2);
+	Array<T> operator-(T a)const;
+	Array<T> operator+(T a)const;
+	Array<T> operator*(T a)const;
+	Array<T> operator/(T a)const;
 
-		this->str = obj2.str;
-		this->stolb = obj2.stolb;
-		arr = new T * [str];
-		for (int i = 0; i < str; i++)
-		{
-			arr[i] = new T[stolb];
-		}
-
-		for (int i = 0; i < str; i++)
-		{
-			for (int j = 0; j < stolb; j++)
-			{
-				arr[i][j] = obj2.arr[i][j];
-			}
-		}
-
-		return *this;
-
-	}
 };
 
 template<class T>
@@ -129,58 +100,6 @@ void Array<T>::Random()
 }
 
 template<class T>
-T** Array<T>::Add(T add)
-{
-	for (int i = 0; i < str; i++)
-	{
-		for (int j = 0; j < stolb; j++)
-		{
-			arr[i][j] += add;
-		}
-	}
-	return arr;
-}
-
-template<class T>
-T** Array<T>::Substract(T min)
-{
-	for (int i = 0; i < str; i++)
-	{
-		for (int j = 0; j < stolb; j++)
-		{
-			arr[i][j] -= min;
-		}
-	}
-	return arr;
-}
-
-template<class T>
-T** Array<T>::Multiply(T mul)
-{
-	for (int i = 0; i < str; i++)
-	{
-		for (int j = 0; j < stolb; j++)
-		{
-			arr[i][j] *= mul;
-		}
-	}
-	return arr;
-}
-
-template<class T>
-T** Array<T>::Divide(T divide)
-{
-	for (int i = 0; i < str; i++)
-	{
-		for (int j = 0; j < stolb; j++)
-		{
-			arr[i][j] /= divide;
-		}
-	}
-	return arr;
-}
-
-template<class T>
 T Array<T>::Max()const
 {
 	T max = 0;
@@ -210,6 +129,91 @@ T Array<T>::Min()const
 	}
 
 	return min;
+}
+
+template<class T>
+Array<T>& Array<T>::operator=(const Array<T>& obj2)
+{
+	if (this == &obj2) {
+		return *this;
+	}
+	if (arr != nullptr) {
+		this->~Array();
+	}
+
+	this->str = obj2.str;
+	this->stolb = obj2.stolb;
+	arr = new T * [str];
+	for (int i = 0; i < str; i++)
+	{
+		arr[i] = new T[stolb];
+	}
+
+	for (int i = 0; i < str; i++)
+	{
+		for (int j = 0; j < stolb; j++)
+		{
+			arr[i][j] = obj2.arr[i][j];
+		}
+	}
+
+	return *this;
+}
+
+template<class T>
+Array<T> Array<T>::operator-(T a) const
+{
+	Array <T>temp = *this;
+	for (int i = 0; i < str; i++)
+	{
+		for (int j = 0; j < stolb; j++)
+		{
+			temp.arr[i][j] = arr[i][j] - a;
+		}
+	}
+	return temp;
+}
+
+template<class T>
+Array<T> Array<T>::operator+(T a) const
+{
+	Array <T>temp = *this;
+	for (int i = 0; i < str; i++)
+	{
+		for (int j = 0; j < stolb; j++)
+		{
+			temp.arr[i][j] = arr[i][j] + a;
+		}
+	}
+	return temp;
+}
+
+template<class T>
+Array<T> Array<T>::operator*(T a) const
+{
+	Array <T>temp = *this;
+	for (int i = 0; i < str; i++)
+	{
+		for (int j = 0; j < stolb; j++)
+		{
+			temp.arr[i][j] = arr[i][j] * a;
+		}
+	}
+	return temp;
+}
+
+template<class T>
+Array<T> Array<T>::operator/(T a) const
+{
+	Array <T>temp = *this;
+	for (int i = 0; i < str; i++)
+	{
+		for (int j = 0; j < stolb; j++)
+		{
+			temp.arr[i][j] = arr[i][j] / a;
+		}
+	}
+	return temp;
 }
 
 
